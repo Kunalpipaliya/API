@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../DOM/bootstrap.min.css">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid d-flex flex-wrap gap-3 w-100 justify-content-center" id="display">
+        
+    </div>
+   
+    <div id="details"></div>
+    <script>
+        let data;
+        async function productData() {
+            let res = await fetch('https://dummyjson.com/recipes')
+            data = await res.json()
+            let display = ''
+            data.recipes.map((item, index) => {
+                display += ` <div class="card w-25">
+                                <img src="${item.image}" onclick="fetchDetails(${index})" alt="" width="100%" >
+                                
+                            </div>`
+            })
+            document.getElementById('display').innerHTML = display
+        } productData()
+        async function fetchDetails(index) {
+            
+            let details=''
+            data.recipes.map((item,i)=>{
+                if(i==index){
+                    details += ` <div class="w-50 m-auto">
+                                    <a href="index.html" class="btn btn-primary absolute right-0">Back</a>
+                                    <img class="card w-50 m-auto" src="${item.image}"  alt="" width="100%" >
+                                    <h4 class="text-center">${item.name}</h4>
+                                    <p class="text-center">${item.ingredients}</p>
+                                    <p class="text-center">${item.instructions}</p>
+                                </div>`
+                }
+            })
+             document.getElementById('display').innerHTML = details
+        }
+    </script>
+</body>
+
+</html>
